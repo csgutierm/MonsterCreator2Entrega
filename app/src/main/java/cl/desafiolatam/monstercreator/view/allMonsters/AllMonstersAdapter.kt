@@ -36,6 +36,11 @@ class AllMonstersAdapter(private val monsters: MutableList<Monster>) :
         notifyDataSetChanged()
     }
 
+    fun clearMonster(){
+        this.monsters.clear()
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun onBind(monster: Monster) {
             with(monster) {

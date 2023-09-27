@@ -6,15 +6,11 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.desafiolatam.monstercreator.R
-import cl.desafiolatam.monstercreator.app.MonsterCreatorApplication
-import cl.desafiolatam.monstercreator.model.MonsterAttributes
-import cl.desafiolatam.monstercreator.model.MonsterGenerator
-import cl.desafiolatam.monstercreator.model.MonsterRepository
+import cl.desafiolatam.monstercreator.R.*
 import cl.desafiolatam.monstercreator.view.monster.MonsterCreatorActivity
 import cl.desafiolatam.monstercreator.viewmodel.AllMonsterViewModel
 
@@ -31,10 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             startActivity(Intent(this,MonsterCreatorActivity::class.java))
         }
 
@@ -42,15 +38,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView(){
-        viewModel = ViewModelProvider(this).get(AllMonsterViewModel::class.java)
+        viewModel = ViewModelProvider(this)[AllMonsterViewModel::class.java]
         rvMonsters.layoutManager = LinearLayoutManager(this)
         rvMonsters.adapter = adapter
 
-        viewModel.getAllMonsters().observe(this, Observer {monsters ->
+        viewModel.getAllMonsters().observe(this) { monsters ->
             monsters?.let {
                 adapter.updateMonster(it)
             }
-        })
+        }
 
         /*val temporaryMonsters = MonsterGenerator()
         monsterRepository.saveMonster(temporaryMonsters.generateMonster(MonsterAttributes(10,12,15),"Pepe",R.drawable.asset01))
@@ -72,9 +68,34 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
+/*        return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }*/
+        return when (item.itemId) {
+            id.action_settings -> {
+                showDeleteConfirmationDialog()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("¿Estás seguro de que deseas borrar la base de datos?")
+        builder.setPositiveButton("Sí") { _, _ ->
+            deleteDatabase()
+        }
+        builder.setNegativeButton("No") { _, _ ->
+            // No hacer nada si se selecciona "No"
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun deleteDatabase() {
+        viewModel.clearAllMonsters()
+        Snackbar.make(rvMonsters, "Base de datos borrada exitosamente", Snackbar.LENGTH_SHORT).show()
     }
 }
