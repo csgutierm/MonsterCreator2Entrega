@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="cl.desafiolatam.monstercreator.viewmodel.MonsterCreatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.creature.CreatureActivity">
+
+        <TextView
+            android:id="@+id/tapLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click para añadir Imágen"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
+            app:layout_constraintEnd_toEndOf="@+id/avatarImageView"
+            app:layout_constraintStart_toStartOf="@+id/avatarImageView"
+            app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+            tools:text="Click para añadir Imágen" />
+
+        <ImageView
+            android:id="@+id/avatarImageView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Nombre"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatarImageView" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="Nombre de tu Monstruo"
+            android:inputType="text"
+            android:text="@={viewmodel.name}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nameLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/nameLabel" />
+
+        <TextView
+            android:id="@+id/intelligenceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Inteligencia"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameLabel" />
+
+        <Spinner
+            android:id="@+id/intelligence"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/intelligenceLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/intelligenceLabel" />
+
+        <TextView
+            android:id="@+id/strengthLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Fealdad"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/intelligenceLabel" />
+
+        <Spinner
+            android:id="@+id/strength"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/strengthLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/intelligenceLabel" />
+
+        <TextView
+            android:id="@+id/enduranceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Maldad"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/strengthLabel" />
+
+        <Spinner
+            android:id="@+id/endurance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/enduranceLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/intelligenceLabel" />
+
+        <TextView
+            android:id="@+id/hitPointsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Monster Points"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enduranceLabel"
+            tools:text="Monster Points" />
+
+        <TextView
+            android:id="@+id/hitPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="72sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hitPointsLabel"
+            tools:text="999" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> viewmodel.saveCreature()}"
+            android:text="Guardar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hitPoints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
